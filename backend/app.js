@@ -1,11 +1,13 @@
 const express = require("express");
 const userRoutes = require("./routes/user");
 const messageRoutes = require("./routes/message");
+const cors = require('cors')
 const { sequelize, Message, User } = require("./models");
 
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 //Pas de route dans ce middleware car il sera apliqué à toutes les requêtes envoyées au serveur
 app.use((req, res, next) => {

@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
         .catch((error) => res.status(400).json({ error }));
     })
-    .catch((err) => res.status(500).json({ error: "oups" }));
+    .catch((err) => res.status(500).json({ error: "oups soucis avec le signup" }));
 };
 
 exports.login = (req, res) => {
@@ -42,18 +42,19 @@ exports.login = (req, res) => {
 
           console.log("User logged in.");
           res.status(200).json({
-            isAdmin: user.isAdmin,
+        
             username: user.username,
             token: jwt.sign(
               { username: user.username },
-              `${process.env.JWT_PASS_PHRASE}`,
+              `RANDOM_SECRET_TOKEN`,    // A défénir avec une variable env par la suite
               { expiresIn: "8h" }
             ),
           });
+          console.log("test");
         })
-        .catch((error) => res.status(500).json({ error: "oups2" }));
+        .catch((error) => res.status(500).json({ error: "oups soucis avec le login" }));
     })
-    .catch((error) => res.status(500).json({ error: "oups3" }));
+    .catch((error) => res.status(500).json({ error: "oups soucis avec le login 2" }));
 };
 exports.getOne = async (req, res) => {
   const id = req.params.id;
@@ -71,7 +72,7 @@ exports.getOne = async (req, res) => {
 exports.getAll = async (req, res) => {
   try {
     const users = await User.findAll();
-
+console.log(res.json(users))
     return res.json(users);
   } catch (err) {
     console.log(err);
@@ -111,4 +112,13 @@ exports.delete = async (req, res) => {
     console.log(err);
     return res.status(500).json({ error: "utilisateur introuvable" });
   }
+};
+
+exports.getProfil = (req, res) => {
+	User.findOne({where: {username: req.params.username}})
+		.then(user => {
+            console.log("give profile ")
+			return res.status(200).json({user});
+		})
+		.catch(err =>  res.status(400).json({err}))
 };
