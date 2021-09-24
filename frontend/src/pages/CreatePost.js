@@ -13,7 +13,7 @@ export default function CreatePost() {
     description: "",
   };
   useEffect(() => {
-    if (!authState.status) {
+    if (!localStorage.getItem('accessToken')) {
       history.push("/login");
     }
   }, []);

@@ -9,6 +9,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Profile from "./pages/Profile";
+import Error404 from './pages/Error404'
+import ChangePassword from "./pages/ChangePassword";
+import Users from "./pages/Users";
 
 function App() {
   // authState init a false pour afficher toute la navbar si pas connecté
@@ -22,7 +26,7 @@ function App() {
   //Permet d'empecher un fake token grace au endpoint dans routes/users
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("http://localhost:3001/users/authvalidate", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -50,6 +54,7 @@ function App() {
     setAuthState({ username: "", id: 0, status: false });
     document.location.href = "/login";
   };
+  
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -65,9 +70,14 @@ function App() {
               <>
                 <Link to="/">Accueil</Link>
                 <Link to="/createpost">Ecrire un message</Link>
-                <h5 className="m-0">{authState.username}</h5>
+                
                 <button onClick={logout}> Déconnexion </button>
               </>
+            )}
+            {authState.id === 1 &&(
+              <Link to="/users">
+              Liste des utilisateurs
+              </Link>
             )}
           </div>
           <Switch>
@@ -75,7 +85,11 @@ function App() {
             <Route path="/createpost" exact component={CreatePost} />
             <Route path="/post/:id" exact component={Post} />
             <Route path="/login" exact component={Login} />
+            <Route path="/profile/:id" exact component={Profile} />
+            <Route path="/users" exact component={Users} />
             <Route path="/signup" exact component={Signup} />
+            <Route path="/changepassword" exact component={ChangePassword} />
+            <Route path="*" exact component={Error404} />
           </Switch>
         </Router>
       </AuthContext.Provider>

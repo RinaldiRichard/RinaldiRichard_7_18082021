@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../helpers/AuthContext";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
@@ -9,7 +10,7 @@ export default function Home() {
   let history = useHistory();
 
   useEffect(() => {
-    if (!authState.status) {
+    if (!localStorage.getItem("accessToken")) {
       history.push("/login");
     } else {
       axios
@@ -23,10 +24,17 @@ export default function Home() {
         });
     }
   }, []);
+  console.log(listOfPosts);
 
   return (
     <div className="">
-      <h2 className="text-center mt-5">Bonjour !</h2>
+      <h2 className="text-center mt-5">
+        Bonjour{" "}
+        <Link to={`/profile/${authState.id}`} className="m-0" style={{ color: "rgb(159,232,85)" }}>
+          {authState.username}
+        </Link>
+        {" "}!
+      </h2>
       <p className="text-center">Voici ce que vous avez peut-être manqué !</p>
       <div className="d-flex flex-column-reverse">
         {listOfPosts.map((value, key) => {
@@ -40,7 +48,9 @@ export default function Home() {
               >
                 <div className="title">{value.title}</div>
                 <div className="body">{value.description}</div>
-                <div className="footer">{value.username}</div>
+              </div>
+              <div className="footer">
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
               </div>
             </div>
           );
