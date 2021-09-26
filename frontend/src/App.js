@@ -12,7 +12,7 @@ import axios from "axios";
 import Profile from "./pages/Profile";
 import Error404 from './pages/Error404'
 import ChangePassword from "./pages/ChangePassword";
-import Users from "./pages/Users";
+import Users from "./pages/UsersListAdmin";
 
 function App() {
   // authState init a false pour afficher toute la navbar si pas connecté

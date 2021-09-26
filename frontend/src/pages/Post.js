@@ -69,7 +69,7 @@ function Post() {
         );
       });
   };
- 
+
   const deletePost = () => {
     axios
       .delete(`http://localhost:3001/posts/${id}`, {
@@ -85,26 +85,34 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Entrer un nouveau titre");
-      axios.put("http://localhost:3001/posts/title",{
-        newTitle,
-        id
-      } , {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
+      axios.put(
+        "http://localhost:3001/posts/title",
+        {
+          newTitle,
+          id,
         },
-      })
-      setPostObject({...postObject, title: newTitle})
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      setPostObject({ ...postObject, title: newTitle });
     } else {
       let newText = prompt("Entrer un nouveau texte");
-      axios.put("http://localhost:3001/posts/description",{
-        newText,
-        id
-      } , {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
+      axios.put(
+        "http://localhost:3001/posts/description",
+        {
+          newText,
+          id,
         },
-      })
-      setPostObject({...postObject, description: newText})
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      setPostObject({ ...postObject, description: newText });
     }
   };
 
@@ -115,7 +123,10 @@ function Post() {
           <div
             className="title"
             onClick={() => {
-              if (authState.username === postObject.username || authState.id === 1) {
+              if (
+                authState.username === postObject.username ||
+                authState.id === 1
+              ) {
                 editPost("title");
               }
             }}
@@ -125,7 +136,10 @@ function Post() {
           <div
             className="body"
             onClick={() => {
-              if (authState.username === postObject.username || authState.id === 1) {
+              if (
+                authState.username === postObject.username ||
+                authState.id === 1
+              ) {
                 editPost("description");
               }
             }}
@@ -134,7 +148,8 @@ function Post() {
           </div>
           <div className="footer d-flex justify-content-between">
             {postObject.username}
-            {(authState.username === postObject.username || authState.id === 1) && (
+            {(authState.username === postObject.username ||
+              authState.id === 1) && (
               <button
                 onClick={deletePost}
                 style={{
@@ -169,8 +184,9 @@ function Post() {
                 {comment.commentBody}
                 <div style={{ textAlign: "right" }}>
                   <label>{comment.username}</label>
-                  {/*Si username authentifié =  username du commentaire*/}
-                  {(authState.username === comment.username || authState.id === 1) && (
+                  {/*Si username authentifié =  username du commentaire ou si admin*/}
+                  {(authState.username === comment.username ||
+                    authState.id === 1) && (
                     <button
                       style={{
                         width: "25px",

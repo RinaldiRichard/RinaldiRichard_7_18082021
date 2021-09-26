@@ -47,7 +47,7 @@ function Profile() {
       <div className="basicInfo">
         <h3 className="m-5">Username : {username} </h3>
         <div>
-          {(authState.username === username || authState.id === 1) && (
+          {authState.username === username && (
             <div className="d-flex flex-column align-items-center">
               <button
                 className="mb-3"
@@ -57,6 +57,9 @@ function Profile() {
               >
                 Changer de mot de passe
               </button>
+              </div>)}
+              {(authState.username === username || authState.id === 1) && (
+              <div className="d-flex flex-column align-items-center">
               <button onClick={deleteAccount}>Supprimer le compte</button>
             </div>
           )}

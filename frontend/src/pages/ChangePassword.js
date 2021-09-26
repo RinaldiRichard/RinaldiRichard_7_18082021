@@ -21,7 +21,7 @@ function ChangePassword() {
       )
       .then((response) => {
         if (response.data.error) {
-          alert("AAAAAAAh!"); // A changer....
+          alert("Ancien mot de passe invalide !"); 
         } else {
           alert("mot de passe modifié !");
           history.push("/");
