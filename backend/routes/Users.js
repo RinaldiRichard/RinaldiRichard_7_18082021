@@ -17,10 +17,10 @@ router.post("/", async (req, res) => {
   });
 });
 
-router.get('/', validateToken, async (req,res) => {
-  const listOfMembers = await Users.findAll()
-  res.json(listOfMembers)
-})
+router.get("/", validateToken, async (req, res) => {
+  const listOfMembers = await Users.findAll();
+  res.json(listOfMembers);
+});
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -32,18 +32,23 @@ router.post("/login", async (req, res) => {
   });
 
   // Si user non trouvé
-  if (!user) res.json({ error: "L'utilisateur n'existe pas" });
-
-  // Comparaison entre password rentré et password de user dans BDD
-  bcrypt.compare(password, user.password).then((comparaison) => {
-    if (!comparaison) res.json({ error: "Mot de passe invalide" });
-    const accessToken = sign(
-      { username: user.username, id: user.id },
-      "random_secret_token"
-    );
-    res.json({ token: accessToken, username: username, id: user.id });
-    console.log(res.data); // pour vérifier l'envoie des bonnes infos
-  });
+  if (!user) {
+    res.json({ error: "L'utilisateur n'existe pas" });
+  } else {
+    // Comparaison entre password rentré et password de user dans BDD
+    bcrypt.compare(password, user.password).then((comparaison) => {
+      if (!comparaison) {
+        res.json({ error: "Mot de passe invalide" });
+      } else {
+        const accessToken = sign(
+          { username: user.username, id: user.id },
+          "random_secret_token"
+        );
+        res.json({ token: accessToken, username: username, id: user.id });
+        console.log(res.data); // pour vérifier l'envoie des bonnes infos
+      }
+    });
+  }
 });
 
 //Permet la vérification de la validation du token d'acces
@@ -65,23 +70,25 @@ router.put("/changepassword", validateToken, async (req, res) => {
   // Accès aux infos de user grace au middleware validateToken
   const user = await Users.findOne({ where: { username: req.user.username } });
   bcrypt.compare(oldPassword, user.password).then((comparaison) => {
-    if (!comparaison) res.json({ error: "Ancien mot de passe invalide" });
-    
-    //hash du newPassword
-    bcrypt.hash(newPassword, 10).then((hash) => {
-      // Mise à jour du password dans la BDD
-      Users.update({password: hash},{where: {username: req.user.username}})
-      res.json("Password modifié");
-    });
+    if (!comparaison) {
+      res.json({ error: "Ancien mot de passe invalide" });
+    } else {
+      //hash du newPassword
+      bcrypt.hash(newPassword, 10).then((hash) => {
+        // Mise à jour du password dans la BDD
+        Users.update(
+          { password: hash },
+          { where: { username: req.user.username } }
+        );
+        res.json("Password modifié");
+      });
+    }
   });
 });
 
-router.put('/admin', validateToken, async (req,res)=> {
-  
-})
+router.put("/admin", validateToken, async (req, res) => {});
 
 router.delete("/:id", validateToken, async (req, res) => {
-  
   //Suppression dans la BDD où id = commentId
   await Users.destroy({
     where: {
