@@ -21,6 +21,20 @@ router.get("/", validateToken, async (req, res) => {
   const listOfMembers = await Users.findAll();
   res.json(listOfMembers);
 });
+
+//Permet la vérification de la validation du token d'acces
+router.get("/authvalidate", validateToken, (req, res) => {
+  res.json(req.user);
+});
+
+router.get("/basicinfo/:id", async (req, res) => {
+  const id = req.params.id;
+  // recherche d'un post par primary key -> l'id, tout en excluant le password
+  const basicInfo = await Users.findByPk(id, {
+    attributes: { exclude: ["password"] },
+  });
+  res.json(basicInfo);
+});
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -45,24 +59,10 @@ router.post("/login", async (req, res) => {
           "random_secret_token"
         );
         res.json({ token: accessToken, username: username, id: user.id });
-        console.log(res.data); // pour vérifier l'envoie des bonnes infos
+        //console.log(res.data); // pour vérifier l'envoie des bonnes infos
       }
     });
   }
-});
-
-//Permet la vérification de la validation du token d'acces
-router.get("/authvalidate", validateToken, (req, res) => {
-  res.json(req.user);
-});
-
-router.get("/basicinfo/:id", async (req, res) => {
-  const id = req.params.id;
-  // recherche d'un post par primary key -> l'id, tout en excluant le password
-  const basicInfo = await Users.findByPk(id, {
-    attributes: { exclude: ["password"] },
-  });
-  res.json(basicInfo);
 });
 
 router.put("/changepassword", validateToken, async (req, res) => {
@@ -85,8 +85,6 @@ router.put("/changepassword", validateToken, async (req, res) => {
     }
   });
 });
-
-router.put("/admin", validateToken, async (req, res) => {});
 
 router.delete("/:id", validateToken, async (req, res) => {
   //Suppression dans la BDD où id = commentId

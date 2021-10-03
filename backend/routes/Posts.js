@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { Posts } = require("../models");
+const {Posts} = require("../models/");
 const { validateToken } = require("../middlewares/AuthMiddleware");
+const multer = require('../middlewares/multer-config');
+const postCtrl = require('../controllers/post')
 
 router.get("/", validateToken, async (req, res) => {
   const listOfPosts = await Posts.findAll();
@@ -19,13 +21,7 @@ router.get("/byuserId/:id", async (req, res) => {
   res.json(listOfPosts);
 });
 
-router.post("/", validateToken, async (req, res) => {
-  const post = req.body;
-  post.username = req.user.username;
-  post.UserId = req.user.id;
-  await Posts.create(post);
-  res.json(post);
-});
+router.post("/",validateToken,  postCtrl.create);
 
 router.put("/title", validateToken, async (req, res) => {
   const { newTitle, id } = req.body;
