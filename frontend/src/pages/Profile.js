@@ -30,7 +30,7 @@ function Profile() {
         })
         .then(() => {
           alert("Votre compte a été supprimé");
-          if (authState.id != 1) {
+          if (authState.id !== 1) {
             document.location.href = "/signup";
             localStorage.clear();
           } else {
@@ -76,6 +76,7 @@ function Profile() {
                 }}
               >
                 <div className="title">{value.title}</div>
+                <div>{value.attachment}</div>
                 <div className="body">{value.description}</div>
                 <div className="footer">{value.username}</div>
               </div>

@@ -1,12 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 function Users() {
-  let { id } = useParams;
   const [listOfUsers, setListOfUsers] = useState([]);
-  let history = useHistory;
 
   useEffect(() => {
     axios

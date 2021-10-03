@@ -10,12 +10,12 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Profile from "./pages/Profile";
-import Error404 from './pages/Error404'
+import Error404 from "./pages/Error404";
 import ChangePassword from "./pages/ChangePassword";
 import Users from "./pages/UsersListAdmin";
 
 function App() {
-  // authState init a false pour afficher toute la navbar si pas connecté
+  // authState status init a false pour afficher toute la navbar si pas logué
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -23,9 +23,9 @@ function App() {
   });
 
   //Si accessToken dans le storage, ca passe authState à true pour relog + ne pas afficher toute la navbar
-  //Permet d'empecher un fake token grace au endpoint dans routes/users
   useEffect(() => {
     axios
+      //Permet d'empecher un fake token grace au endpoint dans routes/users
       .get("http://localhost:3001/users/authvalidate", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
@@ -54,7 +54,7 @@ function App() {
     setAuthState({ username: "", id: 0, status: false });
     document.location.href = "/login";
   };
-  
+
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -70,14 +70,11 @@ function App() {
               <>
                 <Link to="/">Accueil</Link>
                 <Link to="/createpost">Ecrire un message</Link>
-                
                 <button onClick={logout}> Déconnexion </button>
               </>
             )}
-            {authState.id === 1 &&(
-              <Link to="/users">
-              Liste des utilisateurs
-              </Link>
+            {authState.id === 1 && (
+              <Link to="/users">Liste des utilisateurs</Link>
             )}
           </div>
           <Switch>

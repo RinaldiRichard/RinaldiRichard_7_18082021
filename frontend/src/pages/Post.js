@@ -64,7 +64,7 @@ function Post() {
       .then(() => {
         setComments(
           comments.filter((value) => {
-            return value.id != id;
+            return value.id !== id;
           })
         );
       });
@@ -133,6 +133,7 @@ function Post() {
           >
             {postObject.title}
           </div>
+          <div className="body">{postObject.attachment}</div>
           <div
             className="body"
             onClick={() => {
