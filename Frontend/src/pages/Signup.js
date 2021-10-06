@@ -8,6 +8,7 @@ function Signup() {
   let history = useHistory();
   const initialValues = {
     username: "",
+    email:"",
     password: "",
   };
 
@@ -17,11 +18,14 @@ function Signup() {
       .max(15)
       .required("Votre pseudo ou username est obligatoire"), //3 caractères min et 15 max
     password: Yup.string().min(4).max(20).required("Mot de passe requis"),
+    email: Yup.string().email().required("Adresse mail obligatoire"),
   });
 
   const onSubmit = (data) => {
+    
     axios.post("http://localhost:3001/users", data).then(() => {
       console.log("Utilisateur enregistré");
+      alert("Merci pour votre enregistrement !")
       history.push('/login')
     });
   };
@@ -41,6 +45,15 @@ function Signup() {
             id="inputCreatePost"
             name="username"
             placeholder="username"
+          />
+          <label>Email : </label>
+          <ErrorMessage name="email" component="span" />
+          <Field
+            autoComplete="off"
+            id="inputCreatePost"
+            name="email"
+            placeholder="email"
+            
           />
           <label>Password : </label>
           <ErrorMessage name="password" component="span" />

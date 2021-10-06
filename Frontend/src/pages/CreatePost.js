@@ -17,18 +17,6 @@ export default function CreatePost() {
 
   let history = useHistory();
 
-  const initialValues = {
-    title: "",
-    description: "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Un titre est requis"),
-    description: Yup.string().required(
-      "merci de ne pas envoyer de message vide !"
-    ),
-  });
-
   const titleOnChange = (e) => {
     setTitle(e.target.value);
     console.log(e.target.value);
@@ -61,7 +49,6 @@ export default function CreatePost() {
       });
   };
 
-  
   useEffect(() => {
     if (!authState.status) {
       history.push("/login");
@@ -92,8 +79,6 @@ export default function CreatePost() {
           <input type="file" onChange={fileOnChange} name="image" />
           <button type="submit">Envoyer</button>
         </form>
-
-        
       </div>
     </>
   );

@@ -31,7 +31,6 @@ export default function Home() {
   return (
     <div className="w-100">
       <h2 className="text-center mt-5">
-        Bonjour{" "}
         <Link
           to={`/profile/${authState.id}`}
           className="m-0"
@@ -39,7 +38,6 @@ export default function Home() {
         >
           {authState.username}
         </Link>{" "}
-        !
       </h2>
       <p className="text-center">Voici ce que vous avez peut-être manqué !</p>
       <div className="d-block mx-auto mt-5 btn" style={{maxWidth:"fit-content"}}>

@@ -85,37 +85,49 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Entrer un nouveau titre");
-      axios.put(
-        "http://localhost:3001/posts/title",
-        {
-          newTitle,
-          id,
-        },
-        {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
+      if (newTitle === null || newTitle === "null") {
+        alert("Merci de ne pas mettre un titre vide !");
+        document.location.href = `http://localhost:3000/post/${id}`;
+      } else {
+        axios.put(
+          "http://localhost:3001/posts/title",
+          {
+            newTitle,
+            id,
           },
-        }
-      );
+          {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+      }
+
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newText = prompt("Entrer un nouveau texte");
-      axios.put(
-        "http://localhost:3001/posts/description",
-        {
-          newText,
-          id,
-        },
-        {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
+      if (newText === null || newText === "null") {
+        alert("Merci de ne pas mettre une description vide !");
+        document.location.href = `http://localhost:3000/post/${id}`;
+      } else {
+        axios.put(
+          "http://localhost:3001/posts/description",
+          {
+            newText,
+            id,
           },
-        }
-      );
+          {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+      }
+
       setPostObject({ ...postObject, description: newText });
     }
   };
-  
+
   return (
     <div className="postPage">
       <div className="leftSide">
@@ -134,8 +146,8 @@ function Post() {
             {postObject.title}
           </div>
           <div className="attachment">
-              <img src={postObject.imageUrl} />
-            </div>
+            <img src={postObject.imageUrl} />
+          </div>
           <div
             className="body"
             onClick={() => {
@@ -147,8 +159,7 @@ function Post() {
               }
             }}
           >
-            
-            <div  className="body">{postObject.description}</div>
+            <div className="body">{postObject.description}</div>
           </div>
           <div className="footer d-flex justify-content-between">
             {postObject.username}
@@ -179,7 +190,10 @@ function Post() {
               setNewComment(event.target.value);
             }}
           />
-          <button className="btn p-0" onClick={addComment}> Ajouter un commentaire</button>
+          <button className="btn p-0" onClick={addComment}>
+            {" "}
+            Ajouter un commentaire
+          </button>
         </div>
         <div className="listOfComments">
           {comments.map((comment, key) => {

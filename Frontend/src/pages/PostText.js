@@ -17,7 +17,7 @@ function Post() {
       setPostObject(response.data);
     });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/commentstext/${id}`).then((response) => {
       setComments(response.data);
     });
   }, []);
@@ -25,10 +25,10 @@ function Post() {
   const addComment = () => {
     axios
       .post(
-        "http://localhost:3001/comments",
+        "http://localhost:3001/commentstext",
         {
           commentBody: newComment,
-          PostId: id,
+          PostsTextId: id,
         },
         {
           //envoie du token d'acces par le header pour controler l'authentification
@@ -56,7 +56,7 @@ function Post() {
   };
   const deleteComment = (id) => {
     axios
-      .delete(`http://localhost:3001/comments/${id}`, {
+      .delete(`http://localhost:3001/commentstext/${id}`, {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -78,7 +78,7 @@ function Post() {
         },
       })
       .then(() => {
-        history.push("/");
+        history.goBack();
       });
   };
 

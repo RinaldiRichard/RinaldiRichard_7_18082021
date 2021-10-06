@@ -48,6 +48,7 @@ body {
   flex: 60%;
   display: grid;
   place-content: center;
+  text-align: -webkit-center;
 }
 .attachment {
   height: 70%;

@@ -6,8 +6,8 @@ import { AuthContext } from "../helpers/AuthContext";
 function Profile() {
   let { id } = useParams();
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
-  const [listOfPostsText, setListOfPostsText] = useState([]);
   let history = useHistory();
   const { authState } = useContext(AuthContext);
 
@@ -16,6 +16,7 @@ function Profile() {
       .get(`http://localhost:3001/users/basicinfo/${id}`)
       .then((response) => {
         setUsername(response.data.username);
+        setEmail(response.data.email);
       });
     axios.get(`http://localhost:3001/posts/byuserId/${id}`).then((response) => {
       setListOfPosts(response.data);
@@ -42,11 +43,12 @@ function Profile() {
       alert("Merci de rester parmis nous !");
     }
   };
-
+console.log(email);
   return (
     <div className="profilPageContainer">
       <div className="basicInfo">
-        <h3 className="m-5">Username : {username} </h3>
+        <h3 className="m-auto mt-4 text-center">Username : {username} </h3>
+        <h4 className="mt-3 m-autp">Adresse mail : {email} </h4>
         <div>
           {authState.username === username && (
             <div className="d-flex flex-column align-items-center">
@@ -61,8 +63,8 @@ function Profile() {
             </div>
           )}
           {(authState.username === username || authState.id === 1) && (
-            <div className="d-flex flex-column align-items-center">
-              <button onClick={deleteAccount}>Supprimer le compte</button>
+            <div className="d-flex flex-column align-items-center m-">
+              <button className="mt-2" onClick={deleteAccount}>Supprimer le compte</button>
             </div>
           )}
         </div>
