@@ -4,13 +4,15 @@ const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const { sign } = require("jsonwebtoken");
+const checkEmail = require("../middlewares/Checkmail")
 
-router.post("/", async (req, res) => {
-  const { username, password } = req.body;
+router.post("/",checkEmail, async (req, res) => {
+  const { username, password, email } = req.body;
   bcrypt.hash(password, 10).then((hash) => {
     // Création d'une ligne dans la table users avec le username envoyé + password hashé
     Users.create({
       username: username,
+      email: email,
       password: hash,
     });
     res.json("OK");
@@ -36,7 +38,7 @@ router.get("/basicinfo/:id", async (req, res) => {
   res.json(basicInfo);
 });
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
   // Recherche d'un user avec le username
   const user = await Users.findOne({
@@ -44,10 +46,19 @@ router.post("/login", async (req, res) => {
       username: username,
     },
   });
+  const userMail = await Users.findOne({
+    where: {
+      email: email,
+    },
+  });
+  
+  
 
   // Si user non trouvé
   if (!user) {
-    res.json({ error: "L'utilisateur n'existe pas" });
+    res.json({ error: "Nom d'utilisateur incorrect" });
+  } else if (!userMail) {
+    res.json({ error: "Adresse mail non valide" });
   } else {
     // Comparaison entre password rentré et password de user dans BDD
     bcrypt.compare(password, user.password).then((comparaison) => {
@@ -55,10 +66,15 @@ router.post("/login", async (req, res) => {
         res.json({ error: "Mot de passe invalide" });
       } else {
         const accessToken = sign(
-          { username: user.username, id: user.id },
+          { username: user.username, id: user.id, email: user.email },
           "random_secret_token"
         );
-        res.json({ token: accessToken, username: username, id: user.id });
+        res.json({
+          token: accessToken,
+          username: username,
+          id: user.id,
+          email: user.email,
+        });
         //console.log(res.data); // pour vérifier l'envoie des bonnes infos
       }
     });
@@ -68,7 +84,7 @@ router.post("/login", async (req, res) => {
 router.put("/changepassword", validateToken, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   // Accès aux infos de user grace au middleware validateToken
-  const user = await Users.findOne({ where: { username: req.user.username } });
+  const user = await Users.findOne({ where: { email: req.user.email } });
   bcrypt.compare(oldPassword, user.password).then((comparaison) => {
     if (!comparaison) {
       res.json({ error: "Ancien mot de passe invalide" });
@@ -76,10 +92,7 @@ router.put("/changepassword", validateToken, async (req, res) => {
       //hash du newPassword
       bcrypt.hash(newPassword, 10).then((hash) => {
         // Mise à jour du password dans la BDD
-        Users.update(
-          { password: hash },
-          { where: { username: req.user.username } }
-        );
+        Users.update({ password: hash }, { where: { email: req.user.email } });
         res.json("Password modifié");
       });
     }

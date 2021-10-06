@@ -1,35 +1,48 @@
-const express = require("express");
-const userRoutes = require("./routes/user");
-const messageRoutes = require("./routes/message");
-const cors = require('cors')
-const { sequelize, Message, User } = require("./models");
+// imports
+const express = require('express');
+const path = require('path');
 
 
+// import des routes
+
+const userRoutes = require('./routes/users');
+const articleRoutes = require('./routes/posts');
+const commentRoutes = require('./routes/comments');
+
+// lancement de l'application express
 const app = express();
+
+// parse requètes de content-type - application/json
 app.use(express.json());
-app.use(cors())
 
-//Pas de route dans ce middleware car il sera apliqué à toutes les requêtes envoyées au serveur
+// parse requètes de content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+// appel des models dans la DB
+const db = require('./models')
+db.sequelize.sync();
+
+// gestion CORS
 app.use((req, res, next) => {
-  // L'origine qui a le droit d'acces est -> tout le monde via le "*"
-  res.setHeader("Access-Control-Allow-Origin", "*");
-
-  //On donne l'autorisation d'utiliser certains headers (origin, content, accept...)
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
-
-  // on donne l'autorisation d'utiliser certaines méthodes (get, post, delete...)
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  }
+  else {
+    next();
+  }
 });
 
-app.use("/api/", userRoutes);
-app.use("/api/", messageRoutes);
 
 
+
+// enregistrement des routeurs
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/users', userRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/comments', commentRoutes);
+
+// export de notre app
 module.exports = app;

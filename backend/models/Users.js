@@ -8,13 +8,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    
   });
 
-   //les users peuvent avoir plusieurs posts (hasMany) et à la suppression du user, ca supprime les posts associés (onDelete:"cascade")
-   Users.associate = (models) => {
-     Users.hasMany(models.Posts, {
-       onDelete: "cascade",
-     });
-   };
+  //les users peuvent avoir plusieurs posts (hasMany) et à la suppression du user, ca supprime les posts associés (onDelete:"cascade")
+  Users.associate = (models) => {
+    Users.hasMany( models.Posts, {
+      onDelete: "cascade",
+    });
+  };
   return Users;
 };

@@ -16,9 +16,10 @@ module.exports = (sequelize, DataTypes) => {
 
   //les posts peuvent avoir plusieurs comentaires (hasMany) et à la suppression du post, ca supprime les commentaires associés (onDelete:"cascade")
   PostsText.associate = (models) => {
-    PostsText.hasMany(models.Comments, {
+    PostsText.hasMany(models.CommentsText, {
       onDelete: "cascade",
     });
   };
+  
   return PostsText;
 };

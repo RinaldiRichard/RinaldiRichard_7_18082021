@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { PostsText } = require("../models/");
 const { validateToken } = require("../middlewares/AuthMiddleware");
-const postCtrl = require('../controllers/postText')
+
+const postCtrl = require("../controllers/postText");
 
 router.get("/", validateToken, async (req, res) => {
   const listOfPosts = await PostsText.findAll();
@@ -15,7 +16,7 @@ router.get("/byId/:id", async (req, res) => {
   res.json(post);
 });
 
-router.post("/",validateToken, postCtrl.create);
+router.post("/", validateToken, postCtrl.create);
 
 router.put("/title", validateToken, async (req, res) => {
   const { newTitle, id } = req.body;

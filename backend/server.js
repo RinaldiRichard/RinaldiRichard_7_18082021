@@ -21,6 +21,9 @@ app.use("/poststext", postTextRouter);
 const commentsRouter = require("./routes/Comments");
 app.use("/comments", commentsRouter);
 
+const commentsTextRouter = require("./routes/CommentsText");
+app.use("/commentstext", commentsTextRouter);
+
 const usersRouter = require("./routes/Users");
 app.use("/users", usersRouter);
 
