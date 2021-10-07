@@ -22,7 +22,7 @@ export default function Home() {
       <p className="text-center">
         Bienvenue sur l'application de tchat de Groupomania !
       </p>
-      <div className="d-flex justify-content-between mt-5 px-5">
+      <div className="d-flex justify-content-evenly mt-5 px-5">
         <div>
           <p>
             Vous voulez accéder aux articles avec images?{" "}

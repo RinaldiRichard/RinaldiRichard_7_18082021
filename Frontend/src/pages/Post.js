@@ -78,7 +78,7 @@ function Post() {
         },
       })
       .then(() => {
-        history.goBack();
+        history.push("/postimage");
       });
   };
 
