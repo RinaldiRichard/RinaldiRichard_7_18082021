@@ -42,14 +42,10 @@ router.put("/description", validateToken, async (req, res) => {
   res.json(newText);
 });
 
-router.delete("/:postId", validateToken, async (req, res) => {
-  const postId = req.params.postId;
-  //Suppression dans la BDD où id = commentId
-  await Posts.destroy({
-    where: {
-      id: postId,
-    },
-  });
-  res.json("message supprimé!");
-});
+router.delete("/:postId", validateToken, postCtrl.deletePostImg);
+
+
+
+
+
 module.exports = router;
