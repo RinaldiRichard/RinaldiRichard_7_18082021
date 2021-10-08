@@ -22,14 +22,15 @@ export default function Home() {
       <p className="text-center">
         Bienvenue sur l'application de tchat de Groupomania !
       </p>
-      <div className="d-flex justify-content-evenly mt-5 px-5">
+      
+      <div className="d-flex flex-column mt-5 px-5">
         <div>
           <p>
             Vous voulez accéder aux articles avec images?{" "}
             <Link to="/postimage">Par ici !</Link>
           </p>
         </div>
-        <div>
+        <div className="mt-4">
           <p>
             Pour les messages simples,{" "}
             <Link to="/posttext">c'est là !</Link>

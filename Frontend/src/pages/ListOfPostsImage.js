@@ -4,10 +4,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-
 export default function Home() {
- 
-
   const [listOfPosts, setListOfPosts] = useState([]);
   const { authState } = useContext(AuthContext);
   let history = useHistory();
@@ -40,8 +37,11 @@ export default function Home() {
         </Link>{" "}
       </h2>
       <p className="text-center">Voici ce que vous avez peut-être manqué !</p>
-      <div className="d-block mx-auto mt-5 btn" style={{maxWidth:"fit-content"}}>
-      <Link to="/createpost">Poster un message</Link>
+      <div
+        className="d-block mx-auto mt-5 btn"
+        style={{ maxWidth: "fit-content" }}
+      >
+        <Link to="/createpost">Poster un message</Link>
       </div>
       <div className="d-flex flex-column-reverse">
         {listOfPosts.map((value, key) => {
@@ -58,14 +58,12 @@ export default function Home() {
                   <img src={value.imageUrl} alt="" />
                 </div>
                 <div className="body">{value.description}</div>
-              </div>
-              <div className="footer">
-                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+              <div className="footer">{value.username}</div>
               </div>
             </div>
           );
         })}
-      </div> 
+      </div>
     </div>
   );
 }

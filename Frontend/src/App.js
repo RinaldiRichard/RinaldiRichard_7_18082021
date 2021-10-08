@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Error404 from "./pages/Error404";
 import ChangePassword from "./pages/ChangePassword";
 import Users from "./pages/UsersListAdmin";
+import Navbar from "./Components/Navbar";
 
 function App() {
   // authState status init a false pour afficher toute la navbar si pas logué
@@ -53,11 +54,6 @@ function App() {
       });
   }, []);
 
-  const logout = () => {
-    localStorage.clear();
-    setAuthState({ username: "", id: 0, status: false });
-    document.location.href = "/login";
-  };
 
   return (
     <div className="App">
@@ -72,13 +68,7 @@ function App() {
               </>
             ) : (
               <>
-                <Link to="/">Accueil</Link>
-                <Link to="/postimage">Message multimédias</Link>
-                <Link to="/posttext">Messages texte</Link>
-                {authState.id === 1 && (
-              <Link to="/users">Liste des utilisateurs</Link>
-            )}
-                <button onClick={logout}> Déconnexion </button>
+              <Navbar/>
               </>
             )}
             

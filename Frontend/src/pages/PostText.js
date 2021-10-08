@@ -85,33 +85,43 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Entrer un nouveau titre");
-      axios.put(
-        "http://localhost:3001/postsText/title",
-        {
-          newTitle,
-          id,
-        },
-        {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
+      if (newTitle === null || newTitle === "") {
+        alert("Merci de ne pas mettre un titre vide !");
+        document.location.href = `http://localhost:3000/postText/${id}`;
+      } else {
+        axios.put(
+          "http://localhost:3001/postsText/title",
+          {
+            newTitle,
+            id,
           },
-        }
-      );
+          {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+      }
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newText = prompt("Entrer un nouveau texte");
-      axios.put(
-        "http://localhost:3001/postsText/description",
-        {
-          newText,
-          id,
-        },
-        {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
+      if (newText === null || newText === "") {
+        alert("Merci de ne pas mettre une description vide !");
+        document.location.href = `http://localhost:3000/postText/${id}`;
+      } else {
+        axios.put(
+          "http://localhost:3001/postsText/description",
+          {
+            newText,
+            id,
           },
-        }
-      );
+          {
+            headers: {
+              accessToken: localStorage.getItem("accessToken"),
+            },
+          }
+        );
+      }
       setPostObject({ ...postObject, description: newText });
     }
   };

@@ -85,7 +85,7 @@ function Post() {
   const editPost = (option) => {
     if (option === "title") {
       let newTitle = prompt("Entrer un nouveau titre");
-      if (newTitle === null || newTitle === "null") {
+      if (newTitle === null || newTitle === "") {
         alert("Merci de ne pas mettre un titre vide !");
         document.location.href = `http://localhost:3000/post/${id}`;
       } else {
@@ -106,7 +106,7 @@ function Post() {
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newText = prompt("Entrer un nouveau texte");
-      if (newText === null || newText === "null") {
+      if (newText === null || newText === "") {
         alert("Merci de ne pas mettre une description vide !");
         document.location.href = `http://localhost:3000/post/${id}`;
       } else {
@@ -161,7 +161,7 @@ function Post() {
           >
             <div className="body">{postObject.description}</div>
           </div>
-          <div className="footer d-flex justify-content-between">
+          <div className="footer d-flex justify-content-between p-2">
             {postObject.username}
             {(authState.username === postObject.username ||
               authState.id === 1) && (

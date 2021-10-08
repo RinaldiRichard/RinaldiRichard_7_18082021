@@ -31,7 +31,7 @@ function Profile() {
           },
         })
         .then(() => {
-          alert("Votre compte a été supprimé");
+          alert("Le compte a été supprimé");
           if (authState.id !== 1) {
             document.location.href = "/signup";
             localStorage.clear();
@@ -43,17 +43,17 @@ function Profile() {
       alert("Merci de rester parmis nous !");
     }
   };
-console.log(email);
+  console.log(email);
   return (
     <div className="profilPageContainer">
       <div className="basicInfo">
         <h3 className="m-auto mt-4 text-center">Username : {username} </h3>
-        <h4 className="mt-3 m-autp">Adresse mail : {email} </h4>
+        <h4 className="mt-3 ">Adresse mail : {email} </h4>
         <div>
           {authState.username === username && (
             <div className="d-flex flex-column align-items-center">
               <button
-                className="mb-3"
+                className="m-3"
                 onClick={() => {
                   history.push("/changepassword");
                 }}
@@ -64,7 +64,9 @@ console.log(email);
           )}
           {(authState.username === username || authState.id === 1) && (
             <div className="d-flex flex-column align-items-center m-">
-              <button className="mt-2" onClick={deleteAccount}>Supprimer le compte</button>
+              <button className="m-3" onClick={deleteAccount}>
+                Supprimer le compte
+              </button>
             </div>
           )}
         </div>
@@ -79,12 +81,12 @@ console.log(email);
                   history.push(`/post/${value.id}`);
                 }}
               >
-                <div className="title">{value.title}</div>
+                <div className="title" style={{backgroundColor:"#464646"}}>{value.title}</div>
                 <div className="attachment">
                   <img src={value.imageUrl} alt="" />
                 </div>
-                <div className="body">{value.description}</div>
-                <div className="footer">{value.username}</div>
+                <div className="body px-2">{value.description}</div>
+                <div className="footer" style={{backgroundColor:"#464646"}}>{value.username}</div>
               </div>
             </div>
           );

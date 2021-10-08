@@ -56,9 +56,7 @@ export default function Home() {
               >
                 <div className="title">{value.title}</div>
                 <div className="body">{value.description}</div>
-              </div>
-              <div className="footer">
-                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+              <div className="footer">{value.username}</div>
               </div>
             </div>
           );
