@@ -1,1 +1,1 @@
-# RinaldiRichard_7_18082021
+Projet 7 du parcours de developpeur web chez Openclassrooms
