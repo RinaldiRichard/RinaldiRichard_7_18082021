@@ -50,7 +50,7 @@ export default function CreatePost() {
           <ErrorMessage name="title" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatePost"
+            id="inputTextTitle"
             name="title"
             placeholder="Titre"
           />
@@ -58,7 +58,7 @@ export default function CreatePost() {
           <ErrorMessage name="description" component="span" />
           <Field
             autoComplete="off"
-            id="inputCreatePost"
+            id="inputTextDescription"
             name="description"
             placeholder="Ecrivez votre message ici"
           />

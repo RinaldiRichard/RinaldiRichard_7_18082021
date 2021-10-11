@@ -44,7 +44,7 @@ function Signup() {
             autoComplete="off"
             id="inputCreatePost"
             name="username"
-            placeholder="username"
+            placeholder="Nom d'utilisateur"
           />
           <label>Email : </label>
           <ErrorMessage name="email" component="span" />
@@ -62,7 +62,7 @@ function Signup() {
             autoComplete="off"
             id="inputCreatePost"
             name="password"
-            placeholder="Password"
+            placeholder="Mot de passe"
           />
           <button type="submit">S'enregistrer</button>
         </Form>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
+  let history = useHistory();
   const [toggleMenu, setToggleMenu] = useState(false);
   const [largeur, setLargeur] = useState(window.innerWidth);
 
@@ -24,46 +25,57 @@ export default function Navbar() {
     };
   }, []);
   const goPostImage = () => {
-    document.location.href = "/postimage";
+    history.push("/postimage");
+    setToggleMenu(!toggleMenu);
   };
   const goHome = () => {
-    document.location.href = "/";
+    history.push("/");
+    setToggleMenu(!toggleMenu);
   };
   const goPostText = () => {
-    document.location.href = "/posttext";
+    history.push("/posttext");
+    setToggleMenu(!toggleMenu);
   };
   const goUserList = () => {
-    document.location.href = "/users";
+    history.push("/users");
+    setToggleMenu(!toggleMenu);
   };
   return (
     <div className="navBar">
       <nav>
         {(toggleMenu || largeur > 750) && (
           <ul className="listeNav">
-            <Link className="item" to="/" onClick={goHome}>
-              Accueil
-            </Link>
-            <Link className="item" to="/postimage" onClick={goPostImage}>
-              Messages multimédia
-            </Link>
-            <Link className="item" to="/posttext" onClick={goPostText}>
-              Messages texte
-            </Link>
-            <Link className="item" to="/users" onClick={goUserList}>
-              Liste des utilisateurs
-            </Link>
+            <li className="item">
+              <Link to="/" onClick={goHome}>
+                Accueil
+              </Link>
+            </li>
+            <li className="item">
+              <Link to="/postimage" onClick={goPostImage}>
+                Messages multimédia
+              </Link>
+            </li>
+            <li className="item">
+              <Link to="/posttext" onClick={goPostText}>
+                Messages texte
+              </Link>
+            </li>
+            <li className="item">
+              <Link to="/users" onClick={goUserList}>
+                Liste des utilisateurs
+              </Link>
+            </li>
             <button
               style={{ height: "fit-content" }}
               className="m-2"
               onClick={logout}
             >
-              {" "}
-              Déconnexion{" "}
+              Déconnexion
             </button>
           </ul>
         )}
         <div className="btnNav">
-          <button style={{ color: "rgb(255,255,255" }} onClick={toggleNav}>
+          <button style={{ color: "rgb(0,0,0" }} onClick={toggleNav}>
             Menu
           </button>
         </div>

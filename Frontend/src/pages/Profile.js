@@ -81,12 +81,12 @@ function Profile() {
                   history.push(`/post/${value.id}`);
                 }}
               >
-                <div className="title" style={{backgroundColor:"#464646"}}>{value.title}</div>
+                <div className="title" style={{backgroundColor:"#464646", color:"white"}}>{value.title}</div>
                 <div className="attachment">
-                  <img src={value.imageUrl} alt="" />
+                  <img src={value.imageUrl} alt="Image uploadée par l'utilisateur" />
                 </div>
                 <div className="body px-2">{value.description}</div>
-                <div className="footer" style={{backgroundColor:"#464646"}}>{value.username}</div>
+                <div className="footer" style={{backgroundColor:"#464646", color:"white"}}>{value.username}</div>
               </div>
             </div>
           );

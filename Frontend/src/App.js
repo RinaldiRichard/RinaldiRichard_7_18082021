@@ -63,8 +63,8 @@ function App() {
             {/* Si le state change dans le composant de la page Login, il affectera l'info ici */}
             {!authState.status ? (
               <>
-                <Link to="/login">Log-in</Link>
-                <Link to="/signup">Sign-up</Link>
+                <Link to="/login">Connexion</Link>
+                <Link to="/signup">S'enregistrer</Link>
               </>
             ) : (
               <>

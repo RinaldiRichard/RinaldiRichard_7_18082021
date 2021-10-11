@@ -146,7 +146,7 @@ function Post() {
             {postObject.title}
           </div>
           <div className="attachment">
-            <img src={postObject.imageUrl} />
+            <img src={postObject.imageUrl} alt="Image uploadée par l'utilisateur" />
           </div>
           <div
             className="body"

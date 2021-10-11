@@ -30,11 +30,12 @@ function Login() {
 
   return (
     <div className="d-flex flex-column m-5">
-      <label htmlFor="username"> Username : </label>
+      <label htmlFor="username"> Nom d'utilisateur / Username : </label>
       <input
         className="m-2"
         name="username"
         type="text"
+placeholder="Nom utilisateur"
         onChange={(event) => {
           setUsername(event.target.value);
         }}
@@ -44,15 +45,17 @@ function Login() {
         className="m-2"
         name="email"
         type="text"
+        placeholder="Email"
         onChange={(event) => {
           setEmail(event.target.value);
         }}
       />
-      <label htmlFor="password">Password : </label>
+      <label htmlFor="password">Mot de passe / Password : </label>
       <input
         className="m-2"
         name="password"
         type="password"
+        placeholder="Mot de passe"
         onChange={(event) => {
           setPassword(event.target.value);
         }}

@@ -71,7 +71,7 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   place-content: center;
-  color: white;
+  color: black;
 }
 
 .post .body {
@@ -97,7 +97,7 @@ img {
   align-items: center;
   padding-left: 15px;
   background-color: rgb(30, 210, 255);
-  color: white;
+  color: black;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -141,7 +141,7 @@ img {
   border: none;
   background-color: lightskyblue;
   border-radius: 5px;
-  color: white;
+  color: black;
 }
 
 .formContainer button:hover {
@@ -259,7 +259,7 @@ button {
 
 .addCommentContainer button {
   background-color: rgb(30, 210, 255);
-  color: white;
+  color: black;
 }
 
 .addCommentContainer input {

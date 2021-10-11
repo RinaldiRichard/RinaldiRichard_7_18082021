@@ -55,7 +55,7 @@ export default function Home() {
               >
                 <div className="title">{value.title}</div>
                 <div className="attachment">
-                  <img src={value.imageUrl} alt="" />
+                  <img src={value.imageUrl} alt="Image uploadée par l'utilisateur" />
                 </div>
                 <div className="body">{value.description}</div>
               <div className="footer">{value.username}</div>
