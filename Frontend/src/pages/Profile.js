@@ -12,6 +12,9 @@ function Profile() {
   const { authState } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!authState.status) {
+      history.push("/login");
+    }
     axios
       .get(`http://localhost:3001/users/basicinfo/${id}`)
       .then((response) => {

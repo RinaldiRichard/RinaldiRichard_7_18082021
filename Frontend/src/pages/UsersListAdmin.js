@@ -1,11 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../helpers/AuthContext";
+import { useHistory } from "react-router";
+
+
 
 function Users() {
+  const { authState } = useContext(AuthContext);
   const [listOfUsers, setListOfUsers] = useState([]);
+  let history = useHistory()
 
   useEffect(() => {
+    if (!authState.status) {
+      history.push("/login");
+    }
     axios
       .get("http://localhost:3001/users", {
         headers: {

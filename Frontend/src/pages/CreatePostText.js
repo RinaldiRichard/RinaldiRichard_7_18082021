@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { AuthContext } from "../helpers/AuthContext";
 
 export default function CreatePost() {
-  
 
+  const { authState } = useContext(AuthContext);
   let history = useHistory();
 
   const initialValues = {
@@ -14,7 +15,7 @@ export default function CreatePost() {
     description: "",
   };
   useEffect(() => {
-    if (!localStorage.getItem("accessToken")) {
+    if (!localStorage.getItem("accessToken") || (!authState.status) ){
       history.push("/login");
     }
   }, []);
@@ -65,7 +66,7 @@ export default function CreatePost() {
           <button type="submit">Envoyer</button>
         </Form>
       </Formik>
-     
+
     </div>
   );
 }
